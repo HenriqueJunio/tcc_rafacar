@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+      <!-- Bootstrap CSS -->
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+          crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" media="screen"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" media="screen"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+    
+      <!-- CSS -->
+       <link rel="stylesheet" type="text/css" href="{% static 'rafacar/css/style.css' %}" />
+      <!-- Título -->
+       <title>RafaCar - Seu veículo foi feito para brilhar!</title>
+    </head>
+    
+    <body>
+        <!-- Menu -->
+        <header>
+            <div id="barra">
+            <hr id="buttonbarra" type="" class="btn btn-outline-secondary">
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                <img href="{% url 'home' %}" src="{% static 'rafacar/imagens/logo.jpeg' %}" width="" height="70" alt="Logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home' %}">Início</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{% url 'servicos' %}">Serviços</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{% url 'agendamentos' %}">Agendamentos</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'contato' %}">Contato</a>
+                  </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Área de Membro</a>
+                    </li>
+                    </li>
+                </ul>
+                </div>
+            </div>
+            </nav>
+        </header>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    <!-- rodapé -->
+        <h1 id="space">Visite nosso espaço</h1>
+        <h4 id="endereco">Rua Ipanema, 80 Canoas - Ibirité MG</h4>
+        <br>
+        <footer>
+          <div class="col-4">
+            <center><iframe class="maps"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3748.7408750833074!2d-44.09307048508395!3d-20.019387386553742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa6b8aeb6e8e77b%3A0x23e4b6dac65c3003!2sR.%20Itapema%2C%2080%20-%20Canoas%2C%20Ibirit%C3%A9%20-%20MG%2C%2032400-000!5e0!3m2!1spt-BR!2sbr!4v1635980604364!5m2!1spt-BR!2sbr"
+                width="1900" height="500"></iframe></center>
+          </div>
+          <div id="barra-footer">
+            <hr id="buttonfooter" type="" class="btn btn-outline-secondary" height="100">
+          </div>
+        
+          Desenvolvedores
+          Copyright 2021 © Desenvolvido por: <a href="https://www.instagram.com/_alineacardoso/">Aline Augusta</a> e <a
+            href="https://www.instagram.com/henriquejunio_/">Henrique Júnio</a>
+        
+        </footer>
+    <body>
+</html>

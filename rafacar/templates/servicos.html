@@ -1,0 +1,582 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="screen"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" media="screen"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'rafacar/css/style.css' %}" />
+</head>
+
+<body>
+  <!-- Menu -->
+  <header>
+    <div style="height: 40px; background-color: #022135; width: 100%;"></div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="{% static 'rafacar/imagens/logo.jpeg' %}" width="" height="70" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'home' %}">Início</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sobre</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'servicos' %}">Serviços</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'agendamentos' %}">Agendamentos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contato' %}">Contato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'edita_user' %}"><img src="{% static 'rafacar/imagens/perfil.png' %}" width="30px" style="margin-left: 10px;"></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <img id="imgservice" src="{% static 'rafacar/imagens/imgservice.png' %}" alt="">
+  <h1 id="function">Conheça nossos serviços</h1>
+  <div class="card-servicos">
+    <div class="row">
+      <div class="col-4">
+        <div class="card" style="width: 21rem;">
+          <img src="{% static 'rafacar/imagens/carbronze.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Nível Bronze</h5>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+              Agendar
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nível Bronze</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Lavação externa</p>
+                    <p>Limpeza dos vidros</p>
+                    <p>Limpeza superficial do painel</p>
+                    <p>Lavação das caixas de rodas e proteção</p>
+                    <p>Condicionamento dos Pneus</p>
+                    <h5 id="preco">Preço: R$ 150,00</h5>
+                  </div>
+                  <div class="container">
+                    <hr size="1" width="100%" align="center" noshade style="background-color: black;">
+                    <center>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
+                        Agendar
+                      </button>
+                    </center>
+                  </div>
+                  <div class="row"><br></div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+              aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form id="modalForm" method="POST" action="{% url 'agendar' %}">
+                    {% csrf_token %}
+                    <div class="modal-header" id="confirma">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirme seu agendamento</h1>
+                    </div>
+                    <div class="modal-body">
+                      <input id="date" type="date" name="date" required>
+                      <input type="time" id="time" name="time" min="09:00" max="18:00" required>
+                      <input type="hidden" name="nivel" value="bronze">
+                      <input type="hidden" name="preco" value="R$ 150,00">
+                      <br><br>
+                      <h4>Nível Bronze</h4>
+                      <p>Lavação externa</p>
+                      <p>Limpeza dos vidros</p>
+                      <p>Limpeza superficial do painel</p>
+                      <p>Lavação das caixas de rodas e proteção</p>
+                      <p>Condicionamento dos Pneus</p>
+                      <h5 id="preco">Preço: R$ 150,00</h5>
+                      <hr size="1" width="100%" align="" noshade style="background-color: black;">
+                      <h4>Endereço</h4>
+                      <textarea id="w3review" name="w3review" rows="4"
+                        class="w-100">Av Italo Bernardes, 305 Jardim Riacho Contagem - 32569-565</textarea>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card" style="width: 21rem;">
+          <img src="{% static 'rafacar/imagens/carprata.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Nível Prata</h5>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+              Agendar
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nível Prata</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Lavação externa detalhada</p>
+                    <p>Limpeza detalhada do painel</p>
+                    <p>Condicionamento dos plásticos internos</p>
+                    <p>Lavação das caixas de rodas e proteção</p>
+                    <p>Condicionamento dos Pneus</p>
+                    <h5 id="preco">Preço: R$ 230,00</h5>
+                  </div>
+                  <div class="container">
+                    <hr size="1" width="100%" align="center" noshade style="background-color: black;">
+                    <center>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop2">
+                        Agendar
+                      </button>
+                    </center>
+                  </div>
+                  <div class="row"><br></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form id="modalForm" method="POST" action="{% url 'agendar' %}">
+                    {% csrf_token %}
+                    <div class="modal-header" id="confirma">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirme seu agendamento</h1>
+                    </div>
+                    <div class="modal-body">
+                      <input id="date" type="date" name="date" required>
+                      <input type="time" id="time" name="time" min="09:00" max="18:00" required>
+                      <input type="hidden" name="nivel" value="Prata">
+                      <input type="hidden" name="preco" value="R$ 230,00">
+                      <br><br>
+                      <h4>Nível Prata</h4>
+                      <p>Lavação externa detalhada</p>
+                      <p>Limpeza detalhada do painel</p>
+                      <p>Condicionamento dos plásticos interno</p>
+                      <p>Lavação das caixas de rodas e proteção</p>
+                      <p>Condicionamento dos Pneus</p>
+                      <h5 id="preco">Preço: R$ 230,00</h5>
+                      <hr size="1" width="100%" align="" noshade style="background-color: black;">
+                      <h4>Endereço</h4>
+                      <textarea id="w3review" name="w3review" rows="4"
+                        class="w-100">Av Italo Bernardes, 305 Jardim Riacho Contagem - 32569-565</textarea>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card" style="width: 21rem;">
+          <img src="{% static 'rafacar/imagens/carouro.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Nível Ouro</h5>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+              Agendar
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nível Ouro</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Lavação externa detalhada</p>
+                    <p>Limpeza detalhada do painel</p>
+                    <p>Condicionamento dos plásticos internos</p>
+                    <p>Aspiração</p>
+                    <p>Lavação das caixas de rodas e proteção</p>
+                    <p>Condicionamento dos Pneus</p>
+                    <h5 id="preco">Preço: R$ 280,00</h5>
+                  </div>
+                  <div class="container">
+                    <hr size="1" width="100%" align="center" noshade style="background-color: black;">
+                    <center>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop3">
+                        Agendar
+                      </button>
+                    </center>
+                  </div>
+                  <div class="row"><br></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form id="modalForm" method="POST" action="{% url 'agendar' %}">
+                    {% csrf_token %}
+                    <div class="modal-header" id="confirma">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirme seu agendamento</h1>
+                    </div>
+                    <div class="modal-body">
+                      <input id="date" type="date" name="date" required>
+                      <input type="time" id="time" name="time" min="09:00" max="18:00" required>
+                      <input type="hidden" name="nivel" value="ouro">
+                      <input type="hidden" name="preco" value="R$ 280,00">
+                      <br><br>
+                      <h4>Nível Ouro</h4>
+                      <p>Lavação externa detalhada</p>
+                      <p>Limpeza detalhada do painel</p>
+                      <p>Condicionamento dos plásticos internos</p>
+                      <p>Lavação das caixas de rodas e proteção</p>
+                      <p>Condicionamento dos Pneus</p>
+                      <h5 id="preco">Preço: R$ 280,00</h5>
+                      <hr size="1" width="100%" align="" noshade style="background-color: black;">
+                      <h4>Endereço</h4>
+                      <textarea id="w3review" name="w3review" rows="4"
+                        class="w-100">Av Italo Bernardes, 305 Jardim Riacho Contagem - 32569-565</textarea>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--2ª parte de serviços-->
+  <div class="card-servicos">
+    <div class="row">
+      <div class="col-4">
+        <div class="card" style="width: 21rem;">
+          <img src="{% static 'rafacar/imagens/carred.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Vitrificação</h5>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal4">
+              Agendar
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Vitrificação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Lavagem detalhada</p>
+                    <p>Descontaminação</p>
+                    <p>Polimento técnico</p>
+                    <p>Aplicação do vitrificador</p>
+                    <p>Secagem</p>
+                    <h5 id="preco">Preço: R$ 1.200,00</h5>
+                    <h6 id="precoauto">O preço é calculado sob o porte do veículo</h6>
+                  </div>
+                  <div class="container">
+                    <hr size="1" width="100%" align="center" noshade style="background-color: black;">
+                    <center>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop4">
+                        Agendar
+                      </button>
+                    </center>
+                  </div>
+                  <div class="row"><br></div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="staticBackdrop4" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form id="modalForm" method="POST" action="{% url 'agendar' %}">
+                    {% csrf_token %}
+                    <div class="modal-header" id="confirma">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirme seu agendamento</h1>
+                    </div>
+                    <div class="modal-body">
+                      <input id="date" type="date" name="date" required>
+                      <input type="time" id="time" name="time" min="09:00" max="18:00" required>
+                      <input type="hidden" name="nivel" value="ouro">
+                      <input type="hidden" name="preco" value="R$ 280,00">
+                      <br><br>
+                      <h4>Vitrificação</h4>
+                      <p>Lavagem detalhada</p>
+                      <p>Descontaminação</p>
+                      <p>Polimento técnico</p>
+                      <p>Aplicação do vitrificador</p>
+                      <p>Secagem</p>
+                      <h5 id="preco">Preço: R$ 1.200,00</h5>
+                      <h6 id="precoauto">O preço é calculado sob o porte do veículo</h6>
+                      <hr size="1" width="100%" align="" noshade style="background-color: black;">
+                      <h4>Endereço</h4>
+                      <textarea id="w3review" name="w3review" rows="4"
+                        class="w-100">Av Italo Bernardes, 305 Jardim Riacho Contagem - 32569-565</textarea>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card" style="width: 21rem;">
+          <img src="{% static 'rafacar/imagens/carprata.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Polimentos</h5>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal5">
+              Agendar
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Polimentos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Lavagem técnica</p>
+                    <p>Correção de pintura</p>
+                    <p>Descontaminação</p>
+                    <p>Aplicação mascaramento</p>
+                    <p>Proteção e acabamentos</p>
+                    <h5 id="preco">Preço: R$ 790,00</h5>
+                    <h6 id="precopoli">O preço é calculado sob o tipo de polimento do veículo</h6>
+                  </div>
+                  <div class="container">
+                    <hr size="1" width="100%" align="center" noshade style="background-color: black;">
+                    <center>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop5">
+                        Agendar
+                      </button>
+                    </center>
+                  </div>
+                  <div class="row"><br></div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="staticBackdrop5" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form id="modalForm" method="POST" action="{% url 'agendar' %}">
+                    {% csrf_token %}
+                    <div class="modal-header" id="confirma">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirme seu agendamento</h1>
+                    </div>
+                    <div class="modal-body">
+                      <input id="date" type="date" name="date" required>
+                      <input type="time" id="time" name="time" min="09:00" max="18:00" required>
+                      <input type="hidden" name="nivel" value="ouro">
+                      <input type="hidden" name="preco" value="R$ 280,00">
+                      <br><br>
+                      <h4>Polimentos</h4>
+                      <p>Lavagem técnica</p>
+                      <p>Correção de pintura</p>
+                      <p>Descontaminação</p>
+                      <p>Aplicação mascaramento</p>
+                      <p>Proteção e acabamentos</p>
+                      <h5 id="preco">Preço: R$ 790,00</h5>
+                      <h6 id="precopoli">O preço é calculado sob o tipo de polimento do veículo</h6>
+                      <hr size="1" width="100%" align="" noshade style="background-color: black;">
+                      <h4>Endereço</h4>
+                      <textarea id="w3review" name="w3review" rows="4"
+                        class="w-100">Av Italo Bernardes, 305 Jardim Riacho Contagem - 32569-565</textarea>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card" style="width: 21rem;">
+          <img src="{% static 'rafacar/imagens/interno.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Higienização</h5>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal6">
+              Agendar
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal6" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Higienização</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Higienização a seco bancos, teto e carpete</p>
+                    <p>Bancos de couro - Incluso a Hidratação</p>
+                    <p>Bancos de Tecido</p>
+                    <h5 id="preco">Preço: R$ 369,00</h5>
+                  </div>
+                  <div class="container">
+                    <hr size="1" width="100%" align="center" noshade style="background-color: black;">
+                    <center>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop6">
+                        Agendar
+                      </button>
+                    </center>
+                  </div>
+                  <div class="row"><br></div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="staticBackdrop6" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form id="modalForm" method="POST" action="{% url 'agendar' %}">
+                    {% csrf_token %}
+                    <div class="modal-header" id="confirma">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirme seu agendamento</h1>
+                    </div>
+                    <div class="modal-body">
+                      <input id="date" type="date" name="date" required>
+                      <input type="time" id="time" name="time" min="09:00" max="18:00" required>
+                      <input type="hidden" name="nivel" value="ouro">
+                      <input type="hidden" name="preco" value="R$ 280,00">
+                      <br><br>
+                      <h4>Higienização</h4>
+                      <p>Higienização a seco bancos, teto e carpete</p>
+                      <p>Bancos de couro - Incluso a Hidratação</p>
+                      <p>Bancos de Tecido</p>
+                      <h5 id="preco">Preço: R$ 369,00</h5>
+                      <hr size="1" width="100%" align="" noshade style="background-color: black;">
+                      <h4>Endereço</h4>
+                      <textarea id="w3review" name="w3review" rows="4"
+                        class="w-100">Av Italo Bernardes, 305 Jardim Riacho Contagem - 32569-565</textarea>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1 id="space">Visite nosso espaço</h1>
+  <h4 id="endereco">Rua Itapema, 80 Canoas - Ibirité MG</h4>
+  <br>
+  <footer>
+    <div class="col-12">
+      <center><iframe class="maps"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3748.7408750833074!2d-44.09307048508395!3d-20.019387386553742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa6b8aeb6e8e77b%3A0x23e4b6dac65c3003!2sR.%20Itapema%2C%2080%20-%20Canoas%2C%20Ibirit%C3%A9%20-%20MG%2C%2032400-000!5e0!3m2!1spt-BR!2sbr!4v1635980604364!5m2!1spt-BR!2sbr"
+          width="100%" height="500"></iframe></center>
+    </div>
+    <div id="barra-footer">
+      <hr id="buttonfooter" type="" class="btn btn-outline-secondary" height="100">
+    </div>
+
+    Desenvolvedores
+    Copyright 2021 © Desenvolvido por: <a href="https://www.instagram.com/_alineacardoso/">Aline Augusta</a> e <a
+      href="https://www.instagram.com/henriquejunio_/">Henrique Júnio</a>
+
+  </footer>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

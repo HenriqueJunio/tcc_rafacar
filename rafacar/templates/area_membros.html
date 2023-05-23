@@ -1,0 +1,33 @@
+<html>
+    <body>
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full mb-12">
+                <h1 class="sm:text-7xl text-2xl font-medium mb-4 text-gray-900">Meus agendamentos</h1>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Data de upload</th>
+                        <th>Horario de upload</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for agendamentos in agendamentos %}
+                        <tr>
+                            <td>{{ agendamentos.date|date:"d/m/Y" }}</td>
+                            <td>{{ agendamentos.appt|time:"H:i" }}</td>
+                            <td>{{ agendamentos.nivel}}</td>
+
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="12">Não há agendamentos para exibir.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+            </table>
+        </div>    
+    </body>
+</html>

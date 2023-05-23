@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style>
+    /* Estilos adicionais personalizados */
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 230px;
+    }
+
+    .card {
+      width: 300px;
+      height: 300px;
+      background-color: #d9d9d9;
+      color: #000000;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      margin-bottom: 5px;
+    }
+
+    .navbar {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      background: #efefef !important;
+    }
+  </style>
+</head>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="screen"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" media="screen"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'rafacar/css/style.css' %}" />
+  <!-- Título -->
+  <title>Agendamentos</title>
+</head>
+
+<body>
+  <!-- Menu -->
+  <header>
+    <div style="height: 40px; background-color: #022135; width: 100%;"></div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="{% static 'rafacar/imagens/logo.jpeg' %}" width="" height="70" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'home' %}">Início</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sobre</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'servicos' %}">Serviços</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'agendamentos' %}">Agendamentos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contato' %}">Contato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'edita_user' %}"><img src="{% static 'rafacar/imagens/perfil.png' %}"
+                  width="30px" style="margin-left: 10px;"></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <body>
+    <div class="container px-5 py-24 mx-auto">
+      <div class="d-flex justify-content-center">
+        <h1 class="mb-4 text-center" style="margin-top: 50px;">Meus Agendamentos</h1>
+      </div>
+      {% if messages %}
+      <div class="alert alert-warning">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="card-container">
+        {% for agendamento in agendamentos %}
+        <div class="card mb-4" style="width: 400px;">
+          <h2>Agendamento</h2>
+          <p>Data: {{ agendamento.date|date:"d/m/Y" }}</p>
+          <p>Horário: {{ agendamento.time|time:"H:i" }}</p>
+          <p>Nível: {{ agendamento.nivel }}</p>
+          <p>Preço: {{ agendamento.preco }}</p>
+          <div class="button-group">
+            <a href="{% url 'excluir_agendamento' agendamento.id %}" class="btn btn-danger mr-2">Excluir</a>
+            <a href="#" class="btn btn-primary" data-toggle="modal"
+              data-target="#editarModal{{ agendamento.id }}">Editar</a>
+          </div>
+        </div>
+        {% empty %}
+        <p>Não há agendamentos para exibir.</p>
+        {% endfor %}
+      </div>
+    </div>
+    <!-- Modal de Edição de Agendamento -->
+    <!-- Modal de Edição de Agendamento -->
+    {% for agendamento in agendamentos %}
+    <div class="modal" id="editarModal{{ agendamento.id }}" tabindex="-1" role="dialog"
+      aria-labelledby="editarModalLabel{{ agendamento.id }}" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editarModalLabel{{ agendamento.id }}">Editar Agendamento</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form method="post" action="{% url 'editar_agendamento' agendamento.id %}">
+            {% csrf_token %}
+            <div class="modal-body">
+              <p>Data: <input id="date" type="date" name="date" value="{{ agendamento.date|date:'Y-m-d' }}" /></p>
+              <p>Horário: <input type="time" id="name" name="time" min="09:00" max="18:00" value="{{ agendamento.time|time:'H:i' }}" /></p>
+              <p>
+                Nível:
+                <select name="nivel">
+                    <option value="Nível Bronze" {% if agendamento.nivel == 'Nível Bronze' %}selected{% endif %}>Nível Bronze</option>
+                    <option value="Nível Prata" {% if agendamento.nivel == 'Nível Prata' %}selected{% endif %}>Nível Prata</option>
+                    <option value="Nível Ouro" {% if agendamento.nivel == 'Nível Ouro' %}selected{% endif %}>Nível Ouro</option>
+                    <option value="Vitrificação" {% if agendamento.nivel == 'Vitrificação' %}selected{% endif %}>Vitrificação</option>
+                    <option value="Polimentos" {% if agendamento.nivel == 'Polimentos' %}selected{% endif %}>Polimentos</option>
+                    <option value="Higienização" {% if agendamento.nivel == 'Higienização' %}selected{% endif %}>Higienização</option>
+                </select>
+            </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+  </body>
+
+</html>
