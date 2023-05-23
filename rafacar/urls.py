@@ -11,6 +11,7 @@ urlpatterns = [
     path('', home),  # tela inicio
     path('home', home, name='home'),
     path('contato/', views.contato, name='contato'),
+    path('sobre/', views.sobre, name='sobre'),
     path('servicos/', views.servicos, name='servicos'),
     path('login/', views.login_user, name='login'),
     path('cadastro/', views.cadastrar_usuario, name='cadastro'),
