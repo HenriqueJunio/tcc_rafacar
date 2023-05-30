@@ -10,18 +10,23 @@ from .models import Agendamento, DadosPessoais
 def home(request):
     return render(request, 'index.html')
 
+
 def contato(request):
     return render(request, 'contato.html')
+
 
 def sobre(request):
     return render(request, 'sobre.html')
 
+
 def servicos(request):
     return render(request, 'servicos.html')
+
 
 def logout_view(request):
     logout(request)
     return redirect('home')
+
 
 def login_user(request):
     if request.method == 'POST':
@@ -29,9 +34,12 @@ def login_user(request):
         password = request.POST['password']
         usuario = authenticate(request, username=username, password=password)
         if usuario is not None:
-            # Autenticação bem-sucedida
             login(request, usuario)
-            return redirect('home')
+            if request.user.is_staff:
+                return redirect('agendamentos')
+            else:
+               return redirect('home')
+
         else:
             # Autenticação falhou
             error_message = "Nome de usuário ou senha inválidos."
@@ -63,7 +71,8 @@ def cadastrar_usuario(request):
         if User.objects.filter(email=email).exists():
             # E-mail já está cadastrado.
             mensagem_email_cadastrado = 'E-mail já está cadastrado'
-            return render(request, 'cadastro.html', {'mensagem_email_cadastrado': mensagem_email_cadastrado})
+            return render(request, 'cadastro.html',
+                            {'mensagem_email_cadastrado': mensagem_email_cadastrado})
 
         # Criação do usuário
         user = User.objects.create_user(
@@ -118,8 +127,8 @@ def agendar(request):
             agendamento = Agendamento.objects.create(
                 user=user, dados_pessoais=dados_pessoais, date=date, time=time,
                 endereco=endereco, preco=preco, nivel=nivel)
-                
-        mensagem_sucesso = "Agendamento concluido com sucesso!" 
+
+        mensagem_sucesso = "Agendamento concluido com sucesso!"
 
         return render(request, 'index.html', {'mensagem_sucesso': mensagem_sucesso})
 
@@ -131,6 +140,10 @@ def agendamentos(request):
     if not request.user.is_authenticated:
         messages.add_message(request, messages.INFO, 'Faça login primeiro.')
         return redirect('login')
+
+    if request.user.is_staff:
+        agendamentos = Agendamento.objects.all().select_related('user', 'dados_pessoais')
+        return render(request, 'agendamentos_gestor.html', {'agendamentos': agendamentos})
 
     # Filtra os agendamentos do usuário logado
     agendamentos = Agendamento.objects.filter(user=request.user)
@@ -165,16 +178,6 @@ def editar_agendamento(request, agendamento_id):
 def area_membros(request):
     """Area membros"""
     return render(request, 'area_membros.html')
-
-
-def agendamentos_gestor(request):
-    if not request.user.is_authenticated or not request.user.is_staff:
-        messages.add_message(request, messages.INFO, 'Acesso negado.')
-        return redirect('login')
-
-    agendamentos = Agendamento.objects.all().select_related('user', 'dados_pessoais')
-    return render(request, 'agendamentos_gestor.html', {'agendamentos': agendamentos})
-
 
 def edita_user(request):
     """view para usuários editar seus dados pessoais"""

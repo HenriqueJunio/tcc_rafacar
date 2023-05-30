@@ -15,25 +15,6 @@
 
   <link rel="stylesheet" type="text/css" href="{% static 'rafacar/css/style.css' %}" />
 </head>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Função para logout e exibir o alerta
-    function logoutAndAlert(event) {
-      event.preventDefault();  // Impede o redirecionamento imediato
-
-      // Exibe o alerta
-      alert('Deslogado com sucesso!');
-
-      // Redireciona para a URL de logout do Django
-      window.location.href = "{% url 'logout' %}";
-    }
-
-    // Vincule o evento de clique ao botão de logout
-    var logoutButton = document.getElementById('logout-button');
-    logoutButton.addEventListener('click', logoutAndAlert);
-  });
-</script>
-
 
 <style>
   body {
@@ -136,21 +117,25 @@
   <form method="post" class="form-signin" action="{% url 'edita_user' %}">
     {% csrf_token %}
     {% if mensagem_sucesso %}
-        <script>
-            alert("{{ mensagem_sucesso }}");
-        </script>
+    <script>
+      alert("{{ mensagem_sucesso }}");
+    </script>
     {% endif %}
     <h4 class="form-signin-heading">Informações Pessoais</h4>
     <input type="text" name="nome" class="form-control" id="nome" placeholder="Nome" value="{{ dados.nome }}">
-    <input type="text" name="telefone" class="form-control" id="telefone" placeholder="Telefone" value="{{ dados.telefone }}">
+    <input type="text" name="telefone" class="form-control" id="telefone" placeholder="Telefone"
+      value="{{ dados.telefone }}">
     <input type="text" name="cep" class="form-control" id="cep" placeholder="CEP" value="{{ dados.cep }}">
-    <input type="text" name="endereco" class="form-control" id="endereco" placeholder="Endereço" value="{{ dados.endereco }}">
-    <input type="text" name="numero_casa" class="form-control" id="numero_casa" placeholder="Numero:" value="{{ dados.numero_casa }}">
+    <input type="text" name="endereco" class="form-control" id="endereco" placeholder="Endereço"
+      value="{{ dados.endereco }}">
+    <input type="text" name="numero_casa" class="form-control" id="numero_casa" placeholder="Numero:"
+      value="{{ dados.numero_casa }}">
     <input type="text" name="bairro" class="form-control" id="bairro" placeholder="Bairro" value="{{ dados.bairro }}">
     <input type="text" name="cidade" class="form-control" id="cidade" placeholder="Cidade" value="{{ dados.cidade }}">
-    <center><button class="btn btn-primary" type="submit">Salvar</button></center>
-    <center><a id="logout-button" class="btn btn-primary">Logout</a></center>
-</form>
+    <center><button class="btn btn-primary col-4" type="submit">Salvar</button></center>
+    <br>
+    <center><a id="logout-button" class="btn btn-primary col-4">Sair</a></center>
+  </form>
   <script>
     $(document).ready(function () {
       $('#cep').blur(function () {
